@@ -8,7 +8,10 @@ Research-ul de piață e în `PLAN-DEMO.md`.
 npm install
 npm run dev      # http://localhost:4321/foraje-puturi/
 npm run build    # dist/ static
+git push         # republică demo-ul pe https://demo.mrwebsites.ro/foraje-puturi/ (GitHub Pages din workflow)
 ```
+
+Variantele de logo: https://demo.mrwebsites.ro/foraje-puturi/logo (pagină internă, nu e în meniu).
 
 ## Versiunea 2: „între Aura Foraje și forajesiputuri.ro”
 
