@@ -1,0 +1,23 @@
+---
+import { steps } from '../data/site';
+---
+
+<!-- „Procesul în 5 pași”: 5 carduri pe un rând, cu număr 01–05 (forajesiputuri.ro) -->
+<section id="cum-lucram" class="section">
+  <div class="wrap">
+    <h2>Cum lucrăm, în 5 pași</h2>
+    <p class="mt-4 max-w-[40rem] text-[1.02rem] text-muted">De la primul telefon până curge apa, de obicei în aceeași săptămână.</p>
+
+    <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        steps.map((s, i) => (
+          <li class="rounded-[var(--radius-card)] border border-line bg-white p-6">
+            <span class="text-[1.9rem] leading-none font-bold text-green">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-4 text-[1.05rem] font-semibold">{s.title}</h3>
+            <p class="mt-2 text-[0.92rem] leading-relaxed text-muted">{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

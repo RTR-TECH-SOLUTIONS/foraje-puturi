@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+---
+
+<dialog id="lightbox" class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85">
+  <div class="modal-inner grid min-h-dvh w-screen place-items-center p-4">
+    <div class="relative">
+      <img src="" alt="" class="max-h-[86dvh] w-auto max-w-[92vw] rounded-xl" />
+      <button type="button" class="absolute -top-3 -right-3 grid size-11 place-items-center rounded-full bg-white text-ink shadow-lg" data-modal-close aria-label="Închide">
+        <Icon name="close" size={20} />
+      </button>
+    </div>
+  </div>
+</dialog>

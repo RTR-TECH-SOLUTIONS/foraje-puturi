@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+import { u } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- demo de prezentare: nu se indexează. TODO(real): se scoate la proiectul real. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

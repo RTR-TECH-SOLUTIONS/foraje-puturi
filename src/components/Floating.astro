@@ -1,0 +1,15 @@
+---
+import { waLink } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- Buton WhatsApp rotund, fix în dreapta jos (amândouă modelele) -->
+<a
+  href={waLink()}
+  target="_blank"
+  rel="noopener"
+  class="fixed right-5 bottom-5 z-40 grid size-14 place-items-center rounded-full bg-green text-white shadow-[0_8px_24px_-6px_rgb(6_110_36/0.55)] transition-colors hover:bg-green-deep"
+  aria-label="Scrie-ne pe WhatsApp"
+>
+  <Icon name="whatsapp" size={28} />
+</a>

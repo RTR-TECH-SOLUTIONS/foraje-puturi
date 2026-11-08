@@ -1,0 +1,66 @@
+---
+import { nav, site } from '../data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+---
+
+<!-- Header alb: logo stânga (pictogramă + nume pe două culori, ca la Aura), meniu, telefon în buton verde -->
+<header id="top-bar" class="sticky top-0 z-40 bg-white transition-shadow duration-200 data-[scrolled=true]:shadow-[0_2px_16px_rgb(13_19_33/0.08)]">
+  <div class="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
+    <a href="#top" aria-label={`${site.name} ${site.tagline}, începutul paginii`}>
+      <Logo variant={site.logoVariant} />
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Meniu principal">
+      <ul class="flex items-center gap-1 text-[1.02rem] font-medium text-[#3f3f3f]">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="rounded-lg px-4 py-2.5 transition-colors duration-150 hover:text-green">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={site.phoneHref} class="btn btn-md btn-green hidden sm:inline-flex">
+        <Icon name="phone" size={17} />
+        {site.phone}
+      </a>
+      <button
+        id="menu-toggle"
+        type="button"
+        class="grid size-11 place-items-center rounded-[10px] border border-line text-ink lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Deschide meniul"
+      >
+        <Icon name="menu" size={22} class="menu-open" />
+        <Icon name="close" size={22} class="menu-close hidden" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" class="hidden border-t border-line bg-white lg:hidden" aria-label="Meniu mobil">
+    <ul class="wrap py-2">
+      {
+        nav.map((item) => (
+          <li class="border-b border-line last:border-0">
+            <a href={item.href} class="block py-3.5 text-[1.05rem] font-medium text-ink">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="wrap pb-5">
+      <a href={site.phoneHref} class="btn btn-md btn-green w-full">
+        <Icon name="phone" size={17} />
+        Sună: {site.phone}
+      </a>
+    </div>
+  </nav>
+</header>

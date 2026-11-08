@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Despre from '../components/Despre.astro';
+import Galerie from '../components/Galerie.astro';
+import Servicii from '../components/Servicii.astro';
+import Preturi from '../components/Preturi.astro';
+import Proces from '../components/Proces.astro';
+import Zone from '../components/Zone.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import Floating from '../components/Floating.astro';
+import Modals from '../components/Modals.astro';
+---
+
+<Layout
+  title="Foraje puțuri apă și denisipări în București și Ilfov"
+  description="Foraje puțuri apă de la 1 la 40 m, denisipări, prelungiri și curățare fântâni în București, Ilfov și județele din sud. Ofertă gratuită la telefon."
+>
+  <Header />
+  <main>
+    <Hero />
+    <Despre />
+    <Galerie />
+    <Servicii />
+    <Preturi />
+    <Proces />
+    <Zone />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
+  <Floating />
+  <Modals />
+</Layout>
+
+<script>
+  import { site } from '../data/site';
+
+  // Umbră sub header după primul scroll
+  const bar = document.getElementById('top-bar');
+  const onScroll = () => bar?.setAttribute('data-scrolled', String(window.scrollY > 8));
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Meniu mobil
+  const toggle = document.getElementById('menu-toggle');
+  const panel = document.getElementById('mobile-nav');
+  const setMenu = (open: boolean) => {
+    panel?.classList.toggle('hidden', !open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+    toggle?.querySelector('.menu-open')?.classList.toggle('hidden', open);
+    toggle?.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+  };
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  // Clipul din hero: pornește fără sunet, se oprește când iese din ecran; fără autoplay la „reduce motion”
+  const clip = document.querySelector<HTMLElement>('[data-clip]');
+  const video = clip?.querySelector('video');
+  const playBtn = clip?.querySelector<HTMLButtonElement>('[data-clip-play]');
+  const soundBtn = clip?.querySelector<HTMLButtonElement>('[data-clip-sound]');
+  let held = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const showPlay = (show: boolean) => {
+    playBtn?.classList.toggle('hidden', !show);
+    playBtn?.classList.toggle('grid', show);
+  };
+  if (video) {
+    showPlay(held);
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !held) video.play().catch(() => showPlay(true));
+        else video.pause();
+      },
+      { threshold: 0.2 },
+    ).observe(video);
+    const start = () => {
+      held = false;
+      showPlay(false);
+      video.play().catch(() => {});
+    };
+    playBtn?.addEventListener('click', start);
+    soundBtn?.addEventListener('click', () => {
+      video.muted = !video.muted;
+      const on = !video.muted;
+      soundBtn.setAttribute('aria-pressed', String(on));
+      soundBtn.querySelector('[data-icon-mute]')?.classList.toggle('hidden', on);
+      soundBtn.querySelector('[data-icon-sound]')?.classList.toggle('hidden', !on);
+      const label = soundBtn.querySelector('[data-sound-label]');
+      if (label) label.textContent = on ? 'Fără sunet' : 'Cu sunet';
+      if (on) start();
+    });
+  }
+
+  // Lightbox pentru pozele din șantier
+  const lightbox = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const lightImg = lightbox?.querySelector('img');
+  document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      if (!lightbox || !lightImg) return;
+      lightImg.src = btn.dataset.lightbox ?? '';
+      lightImg.alt = btn.dataset.alt ?? '';
+      lightbox.showModal();
+    }),
+  );
+  lightbox?.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t === lightbox || t.classList.contains('modal-inner') || t.closest('[data-modal-close]')) lightbox.close();
+  });
+
+  // Formular → WhatsApp cu mesajul completat
+  // TODO(real): o copie a cererii pe e-mail (Resend), ca să rămână în evidență.
+  const form = document.getElementById('cerere') as HTMLFormElement | null;
+  const err = document.getElementById('cerere-error');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const required = [...form.querySelectorAll<HTMLInputElement>('[required]')];
+    let firstBad: HTMLElement | null = null;
+    required.forEach((f) => {
+      let bad = !f.value.trim();
+      if (f.name === 'phone' && !bad) bad = f.value.replace(/\D/g, '').length < 9;
+      f.setAttribute('aria-invalid', String(bad));
+      if (bad && !firstBad) firstBad = f;
+    });
+    if (firstBad) {
+      if (err) err.textContent = 'Completați numele, un telefon valid și localitatea.';
+      (firstBad as HTMLElement).focus();
+      return;
+    }
+    if (err) err.textContent = '';
+    const d = new FormData(form);
+    const lines = [
+      `Bună ziua! Aș vrea o ofertă pentru: ${d.get('work')}.`,
+      `Localitatea: ${d.get('place')}`,
+      d.get('msg') ? `Detalii: ${d.get('msg')}` : '',
+      `${d.get('name')}, ${d.get('phone')}`,
+    ].filter(Boolean);
+    window.open(`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+  });
+
+  form?.querySelectorAll('[required]').forEach((f) => f.addEventListener('input', () => f.setAttribute('aria-invalid', 'false')));
+</script>

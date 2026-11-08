@@ -1,0 +1,26 @@
+---
+import { faq } from '../data/site';
+---
+
+<!-- „Întrebări frecvente”: casete cu chenar, semn +/– în stânga, prima deschisă (Aura Foraje) -->
+<section id="intrebari" class="section">
+  <div class="wrap max-w-[920px]">
+    <h2>Întrebări frecvente</h2>
+    <div class="mt-8 grid gap-3">
+      {
+        faq.map((f, i) => (
+          <details class="group rounded-xl border border-line bg-white" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center gap-4 px-5 py-4 text-[1rem] font-medium text-ink [&::-webkit-details-marker]:hidden">
+              <span class="relative size-4 shrink-0" aria-hidden="true">
+                <span class="absolute top-1/2 left-0 h-[2px] w-4 -translate-y-1/2 bg-ink" />
+                <span class="absolute top-0 left-1/2 h-4 w-[2px] -translate-x-1/2 bg-ink transition-transform duration-200 group-open:scale-y-0" />
+              </span>
+              {f.q}
+            </summary>
+            <p class="border-t border-line px-5 py-4 pl-[3.25rem] text-[0.96rem] leading-relaxed text-muted">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

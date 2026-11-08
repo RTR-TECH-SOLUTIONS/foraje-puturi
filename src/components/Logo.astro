@@ -1,0 +1,51 @@
+---
+// Logo în stilul Aura Foraje: pictogramă + nume pe două culori + rând mic dedesubt.
+// Trei variante de ales (vezi pagina /logo); cea folosită pe site e `logoVariant` din src/data/site.ts.
+// TODO(real): se refac pe numele real al firmei.
+export type LogoVariant = 'turla' | 'picatura' | 'text';
+
+interface Props {
+  variant?: LogoVariant;
+  dark?: boolean;
+  size?: 'md' | 'lg';
+}
+
+const { variant = 'turla', dark = false, size = 'md' } = Astro.props;
+const navy = dark ? '#ffffff' : '#15296b';
+const green = dark ? '#3ccf6a' : '#088a2d';
+const big = size === 'lg';
+---
+
+<span class="inline-flex items-center gap-2.5">
+  {
+    variant === 'turla' && (
+      <svg width={big ? 58 : 38} height={big ? 64 : 42} viewBox="0 0 40 44" fill="none" aria-hidden="true" class="shrink-0">
+        <path d="M12.5 30 20 4l7.5 26" stroke={navy} stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" />
+        <path d="M14.8 22h10.4M17.3 13.5h5.4" stroke={navy} stroke-width="2.2" stroke-linecap="round" />
+        <path d="M20 4v29" stroke={navy} stroke-width="2.6" stroke-linecap="round" />
+        <path d="M4 30h32" stroke={navy} stroke-width="2.6" stroke-linecap="round" />
+        <path d="M20 34.2s-3.9 4.4-3.9 6.7a3.9 3.9 0 0 0 7.8 0c0-2.3-3.9-6.7-3.9-6.7z" fill={green} />
+      </svg>
+    )
+  }
+  {
+    variant === 'picatura' && (
+      <svg width={big ? 54 : 34} height={big ? 66 : 42} viewBox="0 0 36 44" aria-hidden="true" class="shrink-0">
+        <path d="M18 1.5S3 18.6 3 28.2a15 15 0 0 0 30 0C33 18.6 18 1.5 18 1.5z" fill={dark ? '#ffffff' : '#15296b'} />
+        <path d="M7.2 25h7.6M21.2 25h7.6M5.6 32h9.2M21.2 32h9.6" stroke={dark ? '#15296b' : '#ffffff'} stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" />
+        <rect x="15.6" y="13" width="4.8" height="27" rx="1.4" fill={green} />
+      </svg>
+    )
+  }
+  {variant === 'text' && <span class:list={['shrink-0 rounded-full', big ? 'h-16 w-2' : 'h-10 w-[5px]']} style={`background:${green}`} aria-hidden="true" />}
+
+  <span class="leading-none">
+    <span class:list={['block font-bold tracking-[0.01em] uppercase', big ? 'text-[2rem]' : 'text-[1.12rem]']}>
+      <span style={`color:${navy}`}>Foraje</span> <span style={`color:${green}`}>Puțuri</span>
+    </span>
+    <span
+      class:list={['mt-1 block font-semibold tracking-[0.16em] uppercase', big ? 'text-[0.85rem]' : 'text-[0.6rem]']}
+      style={`color:${dark ? 'rgb(255 255 255 / 0.7)' : '#5b6475'}`}>Denisipări · Prelungiri</span
+    >
+  </span>
+</span>

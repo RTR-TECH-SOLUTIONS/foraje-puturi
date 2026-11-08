@@ -1,0 +1,78 @@
+---
+import { site, waLink, workTypes } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- Contact: date de contact în stânga, formular în card în dreapta (forajesiputuri.ro); formularul deschide WhatsApp -->
+<section id="contact" class="section bg-soft">
+  <div class="wrap grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+    <div>
+      <h2>Cere o ofertă gratuită</h2>
+      <p class="mt-4 max-w-[30rem] text-[1.02rem] text-muted">
+        Spuneți-ne localitatea și la ce adâncime au vecinii apă. Vă răspundem în aceeași zi.
+      </p>
+
+      <ul class="mt-8 grid gap-4">
+        <li>
+          <a href={site.phoneHref} class="flex items-center gap-4">
+            <span class="grid size-12 place-items-center rounded-full bg-green text-white"><Icon name="phone" size={21} /></span>
+            <span>
+              <span class="block text-[0.82rem] text-muted">Telefon</span>
+              <span class="block text-[1.3rem] font-bold text-ink">{site.phone}</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href={waLink()} target="_blank" rel="noopener" class="flex items-center gap-4">
+            <span class="grid size-12 place-items-center rounded-full border border-line bg-white text-green"><Icon name="whatsapp" size={22} /></span>
+            <span>
+              <span class="block text-[0.82rem] text-muted">WhatsApp</span>
+              <span class="block text-[1.05rem] font-semibold text-ink">Trimiteți locația și vă dăm prețul</span>
+            </span>
+          </a>
+        </li>
+        <li class="flex items-center gap-4">
+          <span class="grid size-12 place-items-center rounded-full border border-line bg-white text-ink"><Icon name="clock" size={21} /></span>
+          <span>
+            <span class="block text-[0.82rem] text-muted">Program</span>
+            <span class="block text-[1.05rem] font-semibold text-ink">{site.hours}</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <form id="cerere" class="grid content-start gap-5 rounded-[var(--radius-card)] border border-line bg-white p-6 md:p-8" novalidate>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="field">
+          <label for="f-name">Nume</label>
+          <input id="f-name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="f-phone">Telefon</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+        </div>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="field">
+          <label for="f-place">Localitatea</label>
+          <input id="f-place" name="place" placeholder="ex. Corbeanca" required />
+        </div>
+        <div class="field">
+          <label for="f-work">Lucrarea</label>
+          <select id="f-work" name="work">
+            {workTypes.map((w) => <option value={w}>{w}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-msg">Detalii <span class="font-normal text-muted">(opțional)</span></label>
+        <textarea id="f-msg" name="msg" placeholder="ex. vecinii au apă la 25 m, utilajul intră pe poarta mare"></textarea>
+      </div>
+      <p id="cerere-error" class="text-[0.9rem] font-medium text-[#b42318]" role="alert"></p>
+      <button type="submit" class="btn btn-lg btn-green w-full">
+        <Icon name="whatsapp" size={19} />
+        Trimite pe WhatsApp
+      </button>
+    </form>
+  </div>
+</section>

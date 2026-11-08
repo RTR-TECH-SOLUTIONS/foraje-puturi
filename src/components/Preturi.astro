@@ -1,0 +1,65 @@
+---
+import { priceCards, site, waLink } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<!-- „Preț foraje puțuri, fără surprize”: 3 carduri pe adâncimi, cel din mijloc evidențiat + notă (forajesiputuri.ro) -->
+<section id="preturi" class="section bg-soft">
+  <div class="wrap">
+    <div class="mx-auto max-w-[46rem] text-center">
+      <h2>Preț foraje puțuri, fără surprize</h2>
+      <p class="mt-4 text-[1.02rem] text-muted">
+        Prețul depinde de adâncime, de diametrul tubului și de sol. Pentru prețul exact sunați la{' '}
+        <a href={site.phoneHref} class="font-semibold whitespace-nowrap text-green">{site.phone}</a>.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-3 md:items-stretch">
+      {
+        priceCards.map((c) => (
+          <article
+            class:list={[
+              'relative flex flex-col rounded-[var(--radius-card)] bg-white p-7',
+              c.featured ? 'border-2 border-green shadow-[0_18px_40px_-24px_rgb(8_138_45/0.55)]' : 'border border-line',
+            ]}
+          >
+            {c.featured && (
+              <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-green px-3.5 py-1 text-[0.78rem] font-semibold whitespace-nowrap text-white">
+                Cel mai cerut
+              </span>
+            )}
+            <h3 class="text-[1.15rem] font-semibold">{c.title}</h3>
+            <p class="mt-1 text-[0.92rem] text-muted">{c.range}</p>
+            <p class="mt-4 flex items-baseline gap-1.5 text-ink">
+              <span class="text-[0.85rem] text-muted">de la</span>
+              <span class="text-[2.6rem] leading-none font-bold text-green">{c.from}</span>
+              <span class="text-[0.95rem] font-medium">{c.unit}</span>
+            </p>
+            <ul class="mt-6 grid flex-1 content-start gap-2.5 text-[0.94rem]">
+              {c.items.map((it) => (
+                <li class="grid grid-cols-[1.1rem_minmax(0,1fr)] gap-2.5">
+                  <Icon name="check" size={17} class="mt-1 text-green" />
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={waLink(`Bună ziua! Mă interesează: ${c.title} (${c.range}). Localitatea: `)}
+              target="_blank"
+              rel="noopener"
+              class:list={['btn btn-md mt-7 w-full', c.featured ? 'btn-green' : 'btn-outline']}
+            >
+              Cere ofertă
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 rounded-[var(--radius-card)] border-l-4 border-green bg-white px-6 py-5 text-[0.95rem] leading-relaxed">
+      <strong class="font-semibold text-ink">De ce variază prețul?</strong> Contează diametrul și tipul tubului, adâncimea până la
+      stratul de apă, solul și cât de ușor intră utilajul în curte. Deplasarea în București și Ilfov e inclusă. Pompa și montajul
+      ei se plătesc separat.
+    </div>
+  </div>
+</section>

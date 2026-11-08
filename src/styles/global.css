@@ -1,0 +1,201 @@
+@import 'tailwindcss';
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-ext-400.css';
+@import '@fontsource/poppins/latin-500.css';
+@import '@fontsource/poppins/latin-ext-500.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/poppins/latin-ext-600.css';
+@import '@fontsource/poppins/latin-700.css';
+@import '@fontsource/poppins/latin-ext-700.css';
+
+/*
+  Valori măsurate pe cele două modele (8 noiembrie 2026):
+  - Aura Foraje (auraforaje-denisipari.ro): Poppins peste tot, text aproape negru, fundal alb,
+    buton verde pastilă (#0bce42, radius 50px), H1 44px/500, H2 35px/500–600, numere de serviciu 101px/600.
+  - forajesiputuri.ro (N&C): fundal secundar #f4f6fb, borduri #d9deee, carduri radius 20px,
+    bandă bleumarin #15296b, butoane pastilă 72px înălțime pe hero, secțiuni 96px sus/jos.
+  Singura abatere: verdele e închis la #088a2d, ca textul alb de pe buton să treacă AA (#0bce42 are 2,1:1).
+*/
+@theme {
+  --color-ink: #0d1321;
+  --color-body: #2f3542;
+  --color-muted: #5b6475;
+  --color-soft: #f4f6fb;
+  --color-line: #d9deee;
+  --color-navy: #15296b;
+  --color-navy-2: #1e3a8a;
+  --color-green: #088a2d;
+  --color-green-deep: #066e24;
+
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-card: 20px;
+}
+
+:root {
+  --header-h: 84px;
+  --gutter: clamp(1.25rem, 0.6rem + 2.6vw, 2.5rem);
+  color-scheme: light;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --header-h: 68px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 12px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: #fff;
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 1.35rem + 1.6vw, 2.5rem);
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-navy-2);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section {
+    padding-block: clamp(4rem, 3rem + 3.5vw, 6rem);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border-radius: 999px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 0.18s ease-out,
+      color 0.18s ease-out,
+      border-color 0.18s ease-out;
+  }
+
+  .btn-lg {
+    min-height: 3.75rem;
+    padding: 0 1.9rem;
+    font-size: 1.05rem;
+  }
+
+  .btn-md {
+    min-height: 2.9rem;
+    padding: 0 1.4rem;
+    font-size: 0.98rem;
+  }
+
+  .btn-green {
+    background: var(--color-green);
+    color: #fff;
+  }
+
+  .btn-green:hover {
+    background: var(--color-green-deep);
+  }
+
+  .btn-outline {
+    border: 1.5px solid var(--color-line);
+    color: var(--color-ink);
+    background: #fff;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-ink);
+  }
+
+  .btn-white {
+    border: 1.5px solid rgb(255 255 255 / 0.7);
+    color: #fff;
+  }
+
+  .btn-white:hover {
+    background: rgb(255 255 255 / 0.12);
+    border-color: #fff;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .field label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.97rem;
+  }
+
+  .field textarea {
+    min-height: 6.5rem;
+    resize: vertical;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-navy-2);
+  }
+
+  .field [aria-invalid='true'] {
+    border-color: #b42318;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

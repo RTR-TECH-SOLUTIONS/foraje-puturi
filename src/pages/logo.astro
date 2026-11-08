@@ -1,0 +1,42 @@
+---
+// Pagină internă pentru Mario: cele trei variante de logo, ca să aleagă una. Nu apare în meniu.
+import Layout from '../layouts/Layout.astro';
+import Logo, { type LogoVariant } from '../components/Logo.astro';
+import { u } from '../data/site';
+
+const variants: { id: LogoVariant; name: string; note: string }[] = [
+  { id: 'turla', name: 'A · Turlă de foraj', note: 'Turla cu sapa care intră în pământ și picătura de apă dedesubt.' },
+  { id: 'picatura', name: 'B · Picătură', note: 'Picătură bleumarin cu tubul verde și straturile de sol.' },
+  { id: 'text', name: 'C · Doar text', note: 'Fără pictogramă, cu o bară verde în stânga (ca tubul puțului).' },
+];
+---
+
+<Layout title="Variante logo · Foraje Puțuri" description="Variante de logo pentru demo.">
+  <main class="wrap py-14">
+    <a href={u('/')} class="text-[0.9rem] text-muted hover:text-ink">Înapoi la site</a>
+    <h1 class="mt-4 text-[2rem] font-semibold">Variante de logo</h1>
+    <p class="mt-2 text-muted">Fiecare apare mare, la mărimea din header și pe fundal închis (footer).</p>
+
+    <div class="mt-10 grid gap-6">
+      {
+        variants.map((v) => (
+          <section class="rounded-[var(--radius-card)] border border-line p-6 md:p-8">
+            <h2 class="!text-[1.2rem]">{v.name}</h2>
+            <p class="mt-1 text-[0.92rem] text-muted">{v.note}</p>
+            <div class="mt-6 grid gap-5 lg:grid-cols-[1.4fr_1fr_1fr] lg:items-center">
+              <div class="grid min-h-36 place-items-center rounded-xl bg-white ring-1 ring-line">
+                <Logo variant={v.id} size="lg" />
+              </div>
+              <div class="grid min-h-36 place-items-center rounded-xl bg-white ring-1 ring-line">
+                <Logo variant={v.id} />
+              </div>
+              <div class="grid min-h-36 place-items-center rounded-xl bg-navy">
+                <Logo variant={v.id} dark />
+              </div>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

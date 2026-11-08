@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import forajSol from '../assets/foto/foraj-sol.jpg';
+---
+
+<!-- „Cine suntem noi”: text în stânga, imagine în dreapta (Aura Foraje; clipul e acum sus, în hero) -->
+<section id="despre" class="section">
+  <div class="wrap grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+    <div>
+      <h2>Cine suntem noi</h2>
+      <div class="mt-6 grid max-w-[36rem] gap-4 text-[1rem] leading-[1.7]">
+        <p>
+          Căutați pe cineva care să vă facă puțul repede și fără bătăi de cap? Suntem o echipă din București care forează puțuri de
+          apă și denisipează puțuri existente, cu utilaj propriu.
+        </p>
+        <p>
+          Tubăm cu PVC albastru pentru apă potabilă, punem filtru și pietriș margaritar și nu plecăm de la lucrare până nu curge apa
+          limpede. Lucrăm în București, Ilfov și în județele din sud.
+        </p>
+        <p>
+          Sunați-ne la <a href={site.phoneHref} class="font-semibold text-navy-2 underline-offset-4 hover:underline">{site.phone}</a>{' '}
+          și vă spunem de la primul telefon cât costă puțul.
+        </p>
+      </div>
+    </div>
+
+    <Image
+      src={forajSol}
+      alt="Sapa de foraj intrând în pământ"
+      widths={[560, 900]}
+      sizes="(min-width: 1024px) 560px, 100vw"
+      class="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover"
+      loading="lazy"
+    />
+  </div>
+</section>

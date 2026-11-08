@@ -1,0 +1,30 @@
+---
+import { site, zones } from '../data/site';
+
+const places = ['București', 'Ilfov', ...zones.judete];
+---
+
+<!-- Footer închis cu linkuri pe zone („Servicii foraje puțuri Ilfov”…) și date de contact (Aura Foraje) -->
+<footer class="bg-navy text-white/80">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1fr_1fr_0.9fr]">
+    <!-- TODO(real): fiecare link devine pagină de zonă -->
+    <ul class="grid content-start gap-1.5 text-[0.88rem]">
+      {places.map((p) => <li><a href="#zone" class="hover:text-white">Foraje puțuri {p}</a></li>)}
+    </ul>
+    <ul class="grid content-start gap-1.5 text-[0.88rem]">
+      {places.map((p) => <li><a href="#zone" class="hover:text-white">Denisipări puțuri {p}</a></li>)}
+    </ul>
+    <div>
+      <h2 class="!text-[1.15rem] font-semibold !text-white">Date de contact</h2>
+      <ul class="mt-4 grid gap-1.5 text-[0.95rem]">
+        <li>Telefon: <a href={site.phoneHref} class="font-semibold text-white hover:underline">{site.phone}</a></li>
+        <li>Program: {site.hours}</li>
+        <li>{site.address}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <!-- TODO(real): denumirea legală + CUI, Termeni, Confidențialitate, Cookie, ANPC și „made by RTR” -->
+    <p class="wrap py-5 text-[0.82rem]">© {new Date().getFullYear()} {site.name} {site.tagline}</p>
+  </div>
+</footer>
